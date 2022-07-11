@@ -1,26 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <pre>
+   isLoading: {{ isLoading }}
+  </pre>
+  <pre>
+   isFetching: {{ isFetching }}
+  </pre>
+  <pre>
+   isError: {{ isError }}
+  </pre>
+  <pre>
+   error: {{ error }}
+  </pre>
+  <pre>
+   data: {{ data }}
+  </pre>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {useQueryProvider} from "vue-query";
+
+import usePostApi from "@/composables/usePostApi";
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  setup() {
+    useQueryProvider();
+    const {isLoading, isError, data, error, isFetching} = usePostApi();
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+    return {
+      isLoading,
+      isError,
+      data,
+      error,
+      isFetching,
+    };
+  },
+};
+</script>
